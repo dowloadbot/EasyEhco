@@ -86,9 +86,9 @@ function Install_Ehco() {
 		Ehco_NewVer=$(wget -qO- https://github-api.weifeng.workers.dev/repos/Ehco1996/ehco/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g;s/v//g')
 		mkdir /etc/ehco
 		if [[ ${Bit} == "amd64" ]]; then
-			wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
+			wget -N --no-check-certificate "https://ghproxy.com/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
 		elif [[ ${Bit} == "arm64" ]]; then
-			wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_arm64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco
+			wget -N --no-check-certificate "https://ghproxy.com/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_arm64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco
 		else
 			echo "${Error} 与Github交互失败，安装Ehco失败，即将终止运行脚本"
 			sleep 3s
@@ -108,8 +108,8 @@ function Download_Config() {
 		mkdir ${Path_Dir}
 		touch ${Path_Dir}/config.json
 	fi
-	wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/config.json" -O config.json && chmod +x config.json && mv config.json ${Path_Dir}/config.json
-	wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/config.json.example" -O config.json.example && chmod +x config.json.example && mv config.json.example ${Path_Dir}/config.json.example
+	wget -N --no-check-certificate "https://ghproxy.com/https://github.com/wf-nb/EasyEhco/blob/latest/config.json" -O config.json && chmod +x config.json && mv config.json ${Path_Dir}/config.json
+	wget -N --no-check-certificate "https://ghproxy.com/https://github.com/wf-nb/EasyEhco/blob/latest/config.json.example" -O config.json.example && chmod +x config.json.example && mv config.json.example ${Path_Dir}/config.json.example
 }
 
 #配置Ehco
@@ -159,10 +159,10 @@ function Update_Ehco() {
 		else
 			if [[ ${Bit} == "amd64" ]]; then
 				rm -rf ${Path_Dir}/ehco
-				wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
+				wget -N --no-check-certificate "https://ghproxy.com/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_amd64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco 
 			elif [[ ${Bit} == "arm64" ]]; then
 				rm -rf ${Path_Dir}/ehco
-				wget -N --no-check-certificate "https://github.weifeng.workers.dev/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_arm64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco
+				wget -N --no-check-certificate "https://ghproxy.com/https://github.com/Ehco1996/ehco/releases/download/v${Ehco_NewVer}/ehco_${Ehco_NewVer}_linux_arm64" -O ehco && chmod +x ehco && mv ehco ${Path_Dir}/ehco
 			else
 				echo "${Error} 与Github交互失败，更新Ehco失败，请检查网络设置"
 				exit 1
@@ -829,14 +829,14 @@ function Del_Rule() {
 #更新脚本
 function Update_Shell() {
 	echo -e "${Info} 当前版本为 [ ${Shell_Version} ]，开始检测最新版本..."
-	Shell_NewVer=$(wget --no-check-certificate -qO- "https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/ehco.sh"|grep 'Shell_Version="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1)
+	Shell_NewVer=$(wget --no-check-certificate -qO- "https://ghproxy.com/https://github.com/wf-nb/EasyEhco/blob/latest/ehco.sh"|grep 'Shell_Version="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1)
 	[[ -z ${Shell_NewVer} ]] && echo -e "${Error} 检测最新版本失败" && Show_Menu
 	if [ $(awk -v Shell_NewVer="$Shell_NewVer" -v Shell_Version="$Shell_Version"  'BEGIN{print(Shell_NewVer>Shell_Version)?"1":"0"}') ]; then
 		echo -e "${Info} 发现新版本[ ${Shell_NewVer} ]，是否更新？[Y/n]"
 		read -p "(默认: Y):" Read_YN
 		[[ -z "${Read_YN}" ]] && Read_YN="Y"
 		if [[ ${Read_YN} == [Yy] ]]; then
-			wget -N --no-check-certificate https://github.weifeng.workers.dev/https://github.com/wf-nb/EasyEhco/blob/latest/ehco.sh && chmod +x ehco.sh
+			wget -N --no-check-certificate https://ghproxy.com/https://github.com/wf-nb/EasyEhco/blob/latest/ehco.sh && chmod +x ehco.sh
 			echo -e "${Success} 脚本已更新为最新版本[ ${Shell_NewVer} ]"
             sleep 3s
             Show_Menu
